@@ -59,7 +59,7 @@ namespace Data.Storage
 
         public static int GetEnergy()
         {
-            return CPlayerPrefs.GetInt(PREF_ENERGY);
+            return CPlayerPrefs.GetInt(PREF_ENERGY, 30);
         }
 
     }
