@@ -18,11 +18,9 @@ namespace WE.Game.Gamemode.Campaign
       //  [SerializeField]
       //  private UIMissionIcon iconPrefabs;
         [SerializeField]
-        private Sprite spriteCoin, spriteTiming, spriteKillEnemy;
+        private Text txtCoin, txtTiming, txtKillEnemy;
         [SerializeField]
         private Text textTitleCampaign;
-        [SerializeField]
-        private Text textTiming;
         [SerializeField] 
         private GameObject clockCounter;
 

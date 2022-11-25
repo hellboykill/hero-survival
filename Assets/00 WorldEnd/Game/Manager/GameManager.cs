@@ -2,11 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum GameState
+{
+    MainUi,
+    Gameplay,
+    Pause,
+}
 public class GameManager : MonoBehaviour
 {
-    public static GameManager _instance;
+    private static GameManager _instance;
     public static GameManager Instance => _instance;
 
-    public UIHomeManager uIHome;
+    //public UIHomeManager uIHome;
 
+
+    public GameState State { get; private set; }
+
+    private void Awake()
+    {
+        _instance = this;
+        State = GameState.Gameplay;
+    }
 }

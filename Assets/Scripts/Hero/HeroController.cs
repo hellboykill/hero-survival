@@ -17,20 +17,38 @@ namespace Platformer.Hero
         [SerializeField]
         private LayerMask runableGround;
 
-        public MovementJoyStick movementJoyStick;
+        private MoveControl moveController;
         private Rigidbody2D rigidbodyHero;
         private Animator animRunning;
         private SpriteRenderer spriteHero;
-
+        
         private float currentPostion;
+
+        public bool IsTouching
+        {
+            get
+            {
+                if (moveController != null)
+                {
+                    return moveController.bTouchMove;
+                }
+                return false;
+            }
+
+        }
         void Start()
         {
             rigidbodyHero = GetComponent<Rigidbody2D>();
             spriteHero = GetComponent<SpriteRenderer>();
             animRunning = GetComponent<Animator>();
             currentPostion = transform.position.x;
+            moveController = new MoveControl();
+            moveController.RegisterJoyEvent();
         }
 
+        public float Angle => moveController.Angle;
+        public Vector3 DirectionUnit => moveController.Direction;
+        public float Length => moveController.m_JoyData.length;
         // Update is called once per frame
         void Update()
         {
@@ -40,7 +58,8 @@ namespace Platformer.Hero
        //     Debug.Log(dirX > 0f);
 
             UpdateSpriteHero();
-            UpdateHeroPosition();
+            //UpdateHeroPosition();
+            Move();
         }
 
         private void UpdateSpriteHero()
@@ -54,21 +73,46 @@ namespace Platformer.Hero
 
         private void UpdateHeroPosition()
         {
-            if (movementJoyStick.joystickVec.y != 0)
+            //if (moveController.joystickVec.y != 0)
+            //{
+            //    rigidbodyHero.velocity = new Vector2(movementJoyStick.joystickVec.x * heroBaseSpeed, movementJoyStick.joystickVec.y * heroBaseSpeed);
+            //    animRunning.SetBool("running", true);
+            //}
+            //else
+            //{
+            //    rigidbodyHero.velocity = Vector2.zero;
+            //    animRunning.SetBool("running", false);
+            //    }
+        }
+        private Vector3 tempVector3;
+
+        public void Move()
+        {
+
+            if (IsTouching)
             {
-                rigidbodyHero.velocity = new Vector2(movementJoyStick.joystickVec.x * heroBaseSpeed, movementJoyStick.joystickVec.y * heroBaseSpeed);
-                animRunning.SetBool("running", true);
+                Move(DirectionUnit);
             }
-            else
-            {
-                rigidbodyHero.velocity = Vector2.zero;
-                animRunning.SetBool("running", false);
-            }
+
+        }
+        public virtual void Move(Vector3 direction)
+        {
+            
+            tempVector3 = transform.position;
+            tempVector3 += heroBaseSpeed * Time.deltaTime * direction;
+            //this.transform.eulerAngles = new Vector3(0f, Angle, 0f);
+            transform.position = tempVector3;
         }
         public void TakeDamage()
         {
             
         }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            
+        }
+
         public void FindNearestEnemy()
         {
            // GameCombatController.Instance.EnemyOnFieldList
