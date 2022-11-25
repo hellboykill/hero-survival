@@ -15,10 +15,13 @@ namespace WE.Game.Gamemode.Campaign
         public const string ICON_KILL_ENEMY = "KILL_ENEMY";
 
         public static CampaignModeUI Instance { get; private set; }
-      //  [SerializeField]
-      //  private UIMissionIcon iconPrefabs;
+
         [SerializeField]
-        private Text txtCoin, txtTiming, txtKillEnemy;
+        private Text txtCoin;
+        [SerializeField]
+        private Text txtTiming;
+        [SerializeField]
+        private Text txtKillEnemy;
         [SerializeField]
         private Text textTitleCampaign;
         [SerializeField] 
@@ -114,7 +117,7 @@ namespace WE.Game.Gamemode.Campaign
 
         private void ShowTiming()
         {
-            textTiming.text = "0";
+            txtTiming.text = "0";
         }
 
         //public void UpdateTiming()
