@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using WE.UI.Gameplay.Campaign;
 using UnityEngine.UI;
 using UnityEngine.Diagnostics;
 

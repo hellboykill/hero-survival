@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-//using WE.Manager;
-//using WE.Support;
+using WE.Manager;
+using WE.Support;
 //using WE.Utils;
 
 public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler, IEventSystemHandler
@@ -129,7 +129,7 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (this.mTouchID == -1 && GameManager.Instance.State == GameState.Gameplay)
+        if (this.mTouchID == -1 && GamePlayManager.Instance.State == GameState.Gameplay)
         {
             this.mTouchID = eventData.pointerId;
             this.OnPointerDown(this.GetPos(eventData.position));
@@ -138,7 +138,7 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
 
     private void OnPointerDown(Vector3 pos)
     {
-        if (this.disable || GameManager.Instance.State != GameState.Gameplay)
+        if (this.disable || GamePlayManager.Instance.State != GameState.Gameplay)
         {
             return;
         }
@@ -165,7 +165,7 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (this.disable || GameManager.Instance.State != GameState.Gameplay)
+        if (this.disable || GamePlayManager.Instance.State != GameState.Gameplay)
         {
             return;
         }
@@ -257,8 +257,8 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
         this.m_Data.length = this.DealDrag_touchpos.magnitude;
         this.m_Data.direction.x = this.DealDrag_touchpos.normalized.x;
         this.m_Data.direction.z = this.DealDrag_touchpos.normalized.y * speedDeltaDrag;/*2f;//1.23f;*/
-        this.m_Data.angle = getAngle(this.m_Data.direction);
-        //DebugCustom.Log(" Update Joytick 1", this.m_Data.direction);
+        this.m_Data.angle = Helper.getAngle(this.m_Data.direction);
+
         if (updateui)
         {
             this.touch.localPosition = this.DealDrag_touchpos1;
@@ -266,22 +266,6 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
         }
     }
 
-    private  float getAngle(Vector3 dir)
-    {
-        return getAngle(dir.x, dir.z);
-    }
-
-    private  float getAngle(float x, float y)
-    {
-        float getAngle_angle = 90f - Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-        getAngle_angle = (getAngle_angle + 360f) % 360f;
-        return GetFloat2(getAngle_angle);
-    }
-
-    private  float GetFloat2(float f)
-    {
-        return (float)((int)(f * 100f)) / 100f;
-    }
     //#if UNITY_EDITOR
     //    private int start = 0;
     //    private void Update()

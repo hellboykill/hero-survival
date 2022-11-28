@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-//using WE.Support;
+using WE.Support;
 //using WE.Utils;
 
 public struct JoyData
@@ -22,9 +22,9 @@ public struct JoyData
 
     public void UpdateDirectionByAngle(float angle)
     {
-        //this.angle = angle;
-        //this.direction.x = Helper.Sin(angle);
-        //this.direction.z = Helper.Cos(angle);
+        this.angle = angle;
+        this.direction.x = Helper.Sin(angle);
+        this.direction.z = Helper.Cos(angle);
     }
 
 }

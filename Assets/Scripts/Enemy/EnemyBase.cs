@@ -1,4 +1,4 @@
-using Platformer.Hero;
+using WE.Unit;
 using Sirenix.OdinInspector.Editor.Drawers;
 using System.Collections;
 using System.Collections.Generic;
@@ -53,7 +53,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (collision.CompareTag("Hero"))
         {
-            collision.GetComponent<HeroController>().TakeDamage();
+            collision.GetComponent<Player>().TakeDamage();
         }
     }
 }
